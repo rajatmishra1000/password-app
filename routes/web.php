@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\PasswordController;
 use App\Http\Livewire\Password;
 use App\Http\Livewire\AddPassword;
 use App\Http\Livewire\UpdatePassword;
+use App\Http\Livewire\UploadPassword;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +25,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->name('password.')->group(function () {
     Route::get('/dashboard', Password::class)->name('index');
     Route::get('/password/create', AddPassword::class)->name('create');
+    Route::get('/password/upload', [PasswordController::class, 'uploadView'])->name('upload-view');
+    Route::post('/password/upload', [PasswordController::class, 'upload'])->name('upload');
     Route::get('/password/{password}/update', UpdatePassword::class)->name('update-item');
 });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Password as ModelsPassword;
+use App\Traits\ExportAsCsvTrait;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Crypt;
@@ -11,7 +12,7 @@ use Livewire\Component;
 
 class Password extends Component
 {
-    use WithPagination;
+    use WithPagination, ExportAsCsvTrait;
 
     protected $paginationTheme = 'bootstrap';
     public string $passwordValue = '';
@@ -41,6 +42,20 @@ class Password extends Component
     public function encryptPassword()
     {
         $this->showPassword = false;
+    }
+
+    public function download()
+    {
+        $passwords = ModelsPassword::where('user_id', Auth::user()->id)->get(['name', 'password', 'description'])->toArray();
+
+        $header = [
+            'name' => 'Name',
+            'password' => 'Password',
+            'description' => 'Description',
+        ];
+        array_unshift($passwords, $header);
+
+        return $this->export($passwords);
     }
 
     public function render()

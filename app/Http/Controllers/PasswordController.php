@@ -6,12 +6,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
 use App\Models\Password;
+use App\Traits\ImportToDatabaseTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Http\Request;
 
 class PasswordController extends Controller
 {
+    use ImportToDatabaseTrait;
+
     public function index() :View
     {
         return view('password.index', [
@@ -55,5 +59,19 @@ class PasswordController extends Controller
         $password->delete();
 
         return back()->with('success', 'Data deleted successfully');
+    }
+
+    public function uploadView()
+    {
+        return view('password.upload');
+    }
+
+    public function upload(Request $request)
+    {
+        $this->createArrayFromCsv($request);
+
+        (new Password())->importToDatabase();
+
+        return back()->with('success', 'Data uploaded successfully');
     }
 }
