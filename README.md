@@ -15,12 +15,12 @@ Steps for local installation -
 5. Go to localhost and then phpMyAdmin from your web browser and create a new database. For eg. password_app
 6. Rename ".env.example" file to ".env"
 7. Change database credentials in the .env file.
-        -DB_CONNECTION=mysql
-        -DB_HOST=127.0.0.1
-        -DB_PORT=3306
-        -DB_DATABASE=password_app
-        -DB_USERNAME=root
-        -DB_PASSWORD=
+- DB_CONNECTION=mysql
+- DB_HOST=127.0.0.1
+- DB_PORT=3306
+- DB_DATABASE=password_app
+- DB_USERNAME=root
+- DB_PASSWORD=
 8. Open the command prompt in your project folder and run "composer update" to download all project packages and dependencies.
 9. Run "php artisan migrate" and "php artisan key:generate" to generate the key and migrate all the tables in the database.
 10. Run "php artisan optimize" and "php artisan serve" to start your application at http://127.0.0.1:8000/
